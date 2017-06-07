@@ -228,7 +228,7 @@ function api_add_watermark()
         return false;
 
     if (isset($_POST['watermark']))
-        $watermark = imagecreatefromjpeg($_POST['watermark']);
+        $watermark = imagecreatefrompng($_POST['watermark']);
     else
         return false;
 
@@ -238,8 +238,11 @@ function api_add_watermark()
     $image_width = imagesx($image);
     $image_height = imagesy($image);
 
-    $dest_x = $image_width - $watermark_width - 5;
-    $dest_y = $image_height - $watermark_height - 5;
+    //$dest_x = $image_width - $watermark_width - 5;
+    //$dest_y = $image_height - $watermark_height - 5;
+
+    $dest_x = 0;
+    $dest_y = 0;
 
     imagealphablending($image, true);
     imagealphablending($watermark, true);
@@ -257,7 +260,12 @@ function api_add_watermark()
     $answer_save = imagejpeg($image, $filedir);
 
     $data = file_get_contents($filedir);
-    $base64 = 'data:image/jpeg;base64,' . base64_encode($data);
+    $base64 = base64_encode($data);
+
+    imagedestroy($image);
+    imagedestroy($watermark);
+
+    unlink($filedir);
 
     return $base64;
 }

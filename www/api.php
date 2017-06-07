@@ -220,6 +220,8 @@ add_action('rest_api_init', function () {
 
 function api_add_watermark()
 {
+    header('content-type: text/plain');
+
     if (isset($_POST['image']))
         $image = imagecreatefromjpeg($_POST['image']);
     else
@@ -229,9 +231,6 @@ function api_add_watermark()
         $watermark = imagecreatefromjpeg($_POST['watermark']);
     else
         return false;
-
-    //header('content-type: image/jpeg');
-    header('content-type: text/plain');
 
     $watermark_width = imagesx($watermark);
     $watermark_height = imagesy($watermark);
@@ -261,9 +260,6 @@ function api_add_watermark()
     $base64 = 'data:image/jpeg;base64,' . base64_encode($data);
 
     return $base64;
-
-
-    //return imagejpeg($image, $filedir);
 }
 
 add_action('rest_api_init', function () {

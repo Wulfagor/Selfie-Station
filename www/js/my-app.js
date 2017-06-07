@@ -177,11 +177,11 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                             tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", data], onSuccess, onError);
                         });
 
-                        //myApp.alert(JSON.stringify(data));
+                        myApp.alert(JSON.stringify(data));
                         console.log(data);
                     },
                     error: function (data) {
-                        //myApp.alert(JSON.stringify(data));
+                        myApp.alert(JSON.stringify(data));
                         console.log(data);
                     }
                 });
@@ -270,7 +270,6 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
                     fd.append('selfie', "data:image/jpeg;base64," + selfie_temp);
 
                     $.ajax({
-                        //url: 'http://www.gwctest.org/cosmetica50/wp-json/api/selfie/new_str',
                         url: 'http://50anni.cosmeticaitalia.it/wp-json/api/selfie/new_str',
                         data: fd,
                         processData: false,

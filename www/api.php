@@ -242,7 +242,7 @@ function api_add_watermark()
     //$dest_y = $image_height - $watermark_height - 5;
 
     $dest_x = 0;
-    $dest_y = 0;
+    $dest_y = $image_height - $watermark_height;
 
     imagealphablending($image, true);
     imagealphablending($watermark, true);
@@ -257,15 +257,25 @@ function api_add_watermark()
     $filedir = $wp_upload_dir . "/" . $filename;
     $fileurl = $wp_upload_url . "/" . $filename;
 
-    $answer_save = imagejpeg($image, $filedir);
+    $answer = imagejpeg($image, $filedir);
+
+    if($answer === false)
+        return 'Error: function imagejpeg return false';
 
     $data = file_get_contents($filedir);
+
+    if($data === false)
+        return 'Error: function file_get_contents return false';
+
     $base64 = base64_encode($data);
 
-    imagedestroy($image);
-    imagedestroy($watermark);
+    if($base64 === false)
+        return 'Error: function base64_encode return false';
 
-    unlink($filedir);
+    //imagedestroy($image);
+    //imagedestroy($watermark);
+
+    //unlink($filedir);
 
     return $base64;
 }

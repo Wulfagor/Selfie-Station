@@ -57,6 +57,7 @@ $$(document).on('pageInit', '*', function (e) {
 $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
 
     myApp.alert('456');
+
     central_block();
     db.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
@@ -171,7 +172,7 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                     method: 'POST',
                     success: function (data) {
 
-                        myApp.alert(data);
+                        myApp.alert('success - ' + data);
                         console.log(data);
 
                         $("#photo").css({
@@ -182,9 +183,12 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                         db.transaction(function (tx) {
                             tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", data], onSuccess, onError);
                         });
+
+                        myApp.alert('success - ' + data);
+                        console.log(data);
                     },
                     error: function (data) {
-                        myApp.alert(data);
+                        myApp.alert('error - ' + data);
                         console.log(data);
                     }
                 });

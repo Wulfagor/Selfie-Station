@@ -206,7 +206,7 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
                         cache: false,
                         method: 'POST',
                         success: function (data) {
-                            myApp.alert('success - ' + JSON.stringify(data));
+                            //myApp.alert('success - ' + JSON.stringify(data));
                         },
                         error: function (data) {
                             myApp.alert('error - ' + JSON.stringify(data));

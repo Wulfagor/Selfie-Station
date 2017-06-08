@@ -199,12 +199,12 @@ function api_save_selfie_from_str()
             wp_mail(
                 $_POST['email'],
                 'Your selfie from Cosmetica Italia 50 Anni',
-                'Hi! In attachment you can find your selfie. Goof luck!',
+                'Hi! In attachment you can find your selfie. Good luck!',
                 array(
                     'Content-Type: text/html; charset=UTF-8',
                     'From: Cosmetica Italia 50 Anni <selfie@cosmetica.it>'
                 ),
-                $fileurl
+                $filedir
             );
         }
     }
@@ -230,6 +230,9 @@ add_action('rest_api_init', function () {
     ));
 });
 
+/**
+ * Create a watermark
+ */
 function api_add_watermark()
 {
     header('content-type: text/plain');

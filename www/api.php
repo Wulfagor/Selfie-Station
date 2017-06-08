@@ -259,6 +259,8 @@ function api_add_watermark()
 
     $answer = imagejpeg($image, $filedir);
 
+    //return $fileurl;
+
     if($answer === false)
         return 'Error: function imagejpeg return false';
 
@@ -272,10 +274,10 @@ function api_add_watermark()
     if($base64 === false)
         return 'Error: function base64_encode return false';
 
-    //imagedestroy($image);
-    //imagedestroy($watermark);
+    imagedestroy($image);
+    imagedestroy($watermark);
 
-    //unlink($filedir);
+    unlink($filedir);
 
     return $base64;
 }

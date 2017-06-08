@@ -4,11 +4,9 @@ window.data_of_user = {
     'agree_photo': null,
     'agree_data_of_user': null
 };
-//window.db = window.openDatabase('selfie_station', '1.0', 'selfie_station', 50 * 1024 * 1024);
 window.db = null;
 window.previous_page_name = null;
 
-// Initialize app
 var myApp = new Framework7({
     modalTitle: 'Selfie Station',
     cache: false,
@@ -24,20 +22,22 @@ var myApp = new Framework7({
 var storage = window.localStorage;
 var $$ = Dom7;
 var mainView = myApp.addView('.view-main');
-
 var IScroll = new IScroll('.views');
 
 $$(document).on('deviceready', function () {
+
     central_block();
 
     db = window.sqlitePlugin.openDatabase({name: 'selfie_station.db', location: 'default'});
+    myApp.alert('123' + db);
+    
     db.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
         tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
     });
 
     function onSuccess(transaction, resultSet) {
-        //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
+        myApp.alert('Query completed: ' + JSON.stringify(resultSet));
         //console.log('Query completed: ' + JSON.stringify(resultSet));
     }
 
@@ -55,8 +55,6 @@ $$(document).on('pageInit', '*', function (e) {
 });
 
 $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
-
-    myApp.alert('456');
 
     central_block();
     db.transaction(function (tx) {
@@ -78,49 +76,6 @@ $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
 $$(document).on('pageInit', '.page[data-page="hello_page"]', function (e) {
     if (data_of_user.name !== null || (typeof data_of_user.name !== 'undefined') || data_of_user.name != '') {
         $("#username").html(data_of_user.name);
-    }
-});
-
-$$(document).on('pageInit', '.page[data-page="camera"]', function (e) {
-    if (!navigator.camera) {
-        myApp.alert('Camera not supported!');
-    } else {
-        navigator.camera.getPicture(onSuccessCamera, onFailCamera,
-            {
-                quality: 100,
-                destinationType: Camera.DestinationType.DATA_URL,
-                allowEdit: false,
-                sourceType: 1,
-                encodingType: 0,
-                cameraDirection: 1
-            }
-        );
-
-        function onSuccessCamera(imageData) {
-            $("#photo_background").css({
-                'background': "url(data:image/jpeg;base64," + imageData + ") center center no-repeat",
-                'background-size': 'cover'
-            });
-
-            db.transaction(function (tx) {
-                tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", imageData], onSuccess, onError);
-            });
-
-            function onSuccess(transaction, resultSet) {
-                //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
-                //console.log('Query completed: ' + JSON.stringify(resultSet));
-            }
-
-            function onError(transaction, error) {
-                close_application();
-                myApp.alert('Query failed: ' + error.message);
-                console.log('Query failed: ' + error.message);
-            }
-        }
-
-        function onFailCamera(message) {
-            myApp.alert('Failed because: ' + message);
-        }
     }
 });
 
@@ -165,6 +120,7 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                 $.ajax({
                     url: 'http://50anni.cosmeticaitalia.it/wp-json/api/selfie/add_watermark',
                     data: fd,
+                    dataType: 'json',
                     processData: false,
                     contentType: false,
                     async: false,
@@ -172,11 +128,8 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                     method: 'POST',
                     success: function (data) {
 
-                        myApp.alert('success - ' + data);
-                        console.log(data);
-
-                        $("#photo").css({
-                            'background': "url(data:image/jpeg;base64," + data + ") center center no-repeat",
+                        $$("#photo").css({
+                            'background': "url('data:image/jpeg;base64," + data + "') center center no-repeat",
                             'background-size': 'contain'
                         });
 
@@ -184,8 +137,19 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                             tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", data], onSuccess, onError);
                         });
 
-                        myApp.alert('success - ' + data);
-                        console.log(data);
+                        function onSuccess(transaction, resultSet) {
+                            myApp.alert('Query completed: ' + JSON.stringify(resultSet));
+                            console.log('Query completed: ' + JSON.stringify(resultSet));
+                        }
+
+                        function onError(transaction, error) {
+                            close_application();
+                            myApp.alert('Query failed: ' + error.message);
+                            console.log('Query failed: ' + error.message);
+                        }
+
+                        //myApp.alert('success - ' + data);
+                        //console.log(data);
                     },
                     error: function (data) {
                         myApp.alert('error - ' + data);
@@ -193,28 +157,6 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                     }
                 });
             });
-
-            return true;
-
-            $("#photo").css({
-                'background': "url(data:image/jpeg;base64," + imageData + ") center center no-repeat",
-                'background-size': 'contain'
-            });
-
-            db.transaction(function (tx) {
-                tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", imageData], onSuccess, onError);
-            });
-
-            function onSuccess(transaction, resultSet) {
-                //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
-                //console.log('Query completed: ' + JSON.stringify(resultSet));
-            }
-
-            function onError(transaction, error) {
-                close_application();
-                myApp.alert('Query failed: ' + error.message);
-                console.log('Query failed: ' + error.message);
-            }
         }
 
         function onFailCamera(message) {
@@ -236,9 +178,11 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
         close_application();
     }, 16000);
 
-
     db.transaction(function (tx) {
         tx.executeSql('SELECT * FROM DATA WHERE name=?', ["selfie"], function (tx, results) {
+
+            myApp.alert(JSON.stringify(results));
+
             var len = results.rows.length, i;
             if (len > 0) {
                 var selfie_temp = results.rows.item(0).data;
@@ -264,12 +208,10 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
                         cache: false,
                         method: 'POST',
                         success: function (data) {
-                            //myApp.alert(JSON.stringify(data));
-                            //console.log(data);
+                            myApp.alert('success - ' + JSON.stringify(data));
                         },
                         error: function (data) {
-                            //myApp.alert(JSON.stringify(data));
-                            //console.log(data);
+                            myApp.alert('error - ' + JSON.stringify(data));
                         }
                     });
                 }
@@ -485,7 +427,7 @@ function toDataURL(src, callback, outputFormat) {
 function getAppPath() {
     var pathArray = location.pathname.split('/');
     var appPath = "/";
-    for(var i=1; i<pathArray.length-1; i++) {
+    for (var i = 1; i < pathArray.length - 1; i++) {
         appPath += pathArray[i] + "/";
     }
     return appPath;

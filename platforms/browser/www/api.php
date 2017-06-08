@@ -175,7 +175,6 @@ add_action('rest_api_init', function () {
  */
 function api_save_selfie_from_str()
 {
-
     $image = $_REQUEST['selfie'];
 
     $wp_upload_dir = wp_upload_dir()['path'];
@@ -195,6 +194,19 @@ function api_save_selfie_from_str()
 
     if (empty($_POST['email'])) {
         $_POST['email'] = 'selfie@cosmetica.it';
+    } else {
+        if (isset($_POST['send_email']) && !empty($_POST['send_email'])) {
+            wp_mail(
+                $_POST['email'],
+                'Your selfie from Cosmetica Italia 50 Anni',
+                'Hi! In attachment you can find your selfie. Goof luck!',
+                array(
+                    'Content-Type: text/html; charset=UTF-8',
+                    'From: Cosmetica Italia 50 Anni <selfie@cosmetica.it>'
+                ),
+                $fileurl
+            );
+        }
     }
 
     //Create Selfie comment
@@ -225,21 +237,18 @@ function api_add_watermark()
     if (isset($_POST['image']))
         $image = imagecreatefromjpeg($_POST['image']);
     else
-        return false;
+        return 'Error: cannot create image';
 
     if (isset($_POST['watermark']))
         $watermark = imagecreatefrompng($_POST['watermark']);
     else
-        return false;
+        return 'Error: cannot create watermark';
 
     $watermark_width = imagesx($watermark);
     $watermark_height = imagesy($watermark);
 
     $image_width = imagesx($image);
     $image_height = imagesy($image);
-
-    //$dest_x = $image_width - $watermark_width - 5;
-    //$dest_y = $image_height - $watermark_height - 5;
 
     $dest_x = 0;
     $dest_y = $image_height - $watermark_height;
@@ -258,8 +267,6 @@ function api_add_watermark()
     $fileurl = $wp_upload_url . "/" . $filename;
 
     $answer = imagejpeg($image, $filedir);
-
-    //return $fileurl;
 
     if($answer === false)
         return 'Error: function imagejpeg return false';

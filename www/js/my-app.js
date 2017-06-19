@@ -532,13 +532,7 @@ function close_application() {
         };
         back_to_page('index.html');
     }
-    */
-
-    deleteFile();
-
-    $.each(data_of_user, function (key, value) {
-        storage.removeItem(key);
-    });
+     */
 
     data_of_user = {
         'name': null,
@@ -547,15 +541,42 @@ function close_application() {
         'agree_data_of_user': null
     };
 
-    //back_to_page('index.html');
+    $.each(data_of_user, function (key, value) {
+        storage.removeItem(key);
+    });
 
-    setTimeout(function () {
-        return mainView.router.load({
-            url: 'index.html',
-            reload: true,
-            ignoreCache: true,
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dirEntry) {
+        console.log('file system open: ' + dirEntry.name);
+
+        dirEntry.getFile(file_name, {create: false}, function(fileEntry) {
+            fileEntry.remove(function () {
+                console.log('File successfully deleted')
+                back_to_page('index.html');
+                //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+            }, function () {
+                myApp.alert('Can not delete file');
+                back_to_page('index.html');
+                //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+            });
+        }, function(){
+            back_to_page('index.html');
         });
-    }, 500);
+
+    }, onErrorLoadFs);
+
+    /*
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
+        fileEntry.remove(function () {
+            console.log('File successfully deleted')
+            back_to_page('index.html');
+            //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+        }, function () {
+            myApp.alert('Can not delete file');
+            back_to_page('index.html');
+            //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+        });
+    }, onErrorLoadFs);
+    */
 }
 
 function camera_reload() {

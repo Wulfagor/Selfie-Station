@@ -546,7 +546,16 @@ function close_application() {
         'agree_photo': null,
         'agree_data_of_user': null
     };
-    back_to_page('index.html');
+
+    //back_to_page('index.html');
+
+    setTimeout(function () {
+        return mainView.router.load({
+            url: 'index.html',
+            reload: true,
+            ignoreCache: true,
+        });
+    }, 500);
 }
 
 function camera_reload() {

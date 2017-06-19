@@ -551,12 +551,12 @@ function close_application() {
         dirEntry.getFile(file_name, {create: false}, function(fileEntry) {
             fileEntry.remove(function () {
                 console.log('File successfully deleted')
-                back_to_page('index.html');
-                //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+                //back_to_page('index.html');
+                navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
             }, function () {
                 myApp.alert('Can not delete file');
-                back_to_page('index.html');
-                //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+                //back_to_page('index.html');
+                navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
             });
         }, function(){
             back_to_page('index.html');

@@ -252,22 +252,6 @@ module.exports = [
         "clobbers": [
             "window.StatusBar"
         ]
-    },
-    {
-        "id": "cordova-sqlite-evcore-extbuild-free.SQLitePlugin",
-        "file": "plugins/cordova-sqlite-evcore-extbuild-free/www/SQLitePlugin.js",
-        "pluginId": "cordova-sqlite-evcore-extbuild-free",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
-    },
-    {
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "pluginId": "cordova-sqlite-storage",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -281,9 +265,7 @@ module.exports.metadata =
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-statusbar": "1.0.1",
     "cordova-plugin-websql": "0.0.10",
-    "cordova-plugin-whitelist": "1.2.2",
-    "cordova-sqlite-evcore-extbuild-free": "0.8.5",
-    "cordova-sqlite-storage": "2.0.4"
+    "cordova-plugin-whitelist": "1.2.2"
 };
 // BOTTOM OF METADATA
 });

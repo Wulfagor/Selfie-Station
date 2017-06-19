@@ -268,22 +268,6 @@ module.exports = [
         "id": "cordova-plugin-device-orientation.CompassProxy",
         "pluginId": "cordova-plugin-device-orientation",
         "runs": true
-    },
-    {
-        "file": "plugins/cordova-sqlite-evcore-extbuild-free/www/SQLitePlugin.js",
-        "id": "cordova-sqlite-evcore-extbuild-free.SQLitePlugin",
-        "pluginId": "cordova-sqlite-evcore-extbuild-free",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
-    },
-    {
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "pluginId": "cordova-sqlite-storage",
-        "clobbers": [
-            "SQLitePlugin"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -297,9 +281,7 @@ module.exports.metadata =
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-device-motion": "1.2.4-dev",
     "cordova-plugin-device-orientation": "1.0.6-dev",
-    "cordova-plugin-websql": "0.0.10",
-    "cordova-sqlite-evcore-extbuild-free": "0.8.5",
-    "cordova-sqlite-storage": "2.0.4"
+    "cordova-plugin-websql": "0.0.10"
 }
 // BOTTOM OF METADATA
 });

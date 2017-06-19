@@ -198,8 +198,8 @@ function api_save_selfie_from_str()
         if (isset($_POST['send_email']) && !empty($_POST['send_email'])) {
             wp_mail(
                 $_POST['email'],
-                'Your selfie from Cosmetica Italia 50 Anni',
-                'Hi! In attachment you can find your selfie. Good luck!',
+                '50 anni di Cosmetica Italia: grazie per aver lasciato il segno!',
+                'Seguici su FB <a target="_blank" href="https://www.facebook.com/50esimoCosmeticaItalia/">facebook.com/50esimoCosmeticaItalia</a>',
                 array(
                     'Content-Type: text/html; charset=UTF-8',
                     'From: Cosmetica Italia 50 Anni <selfie@cosmetica.it>'

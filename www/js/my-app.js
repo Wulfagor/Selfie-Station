@@ -22,6 +22,7 @@ var myApp = new Framework7({
         myApp.hideIndicator();
     }
 });
+
 var storage = window.localStorage;
 var $$ = Dom7;
 var mainView = myApp.addView('.view-main');
@@ -550,28 +551,41 @@ function close_application() {
 
         dirEntry.getFile(file_name, {create: false}, function (fileEntry) {
             fileEntry.remove(function () {
-                console.log('File successfully deleted')
-                //back_to_page('index.html');
+                console.log('File successfully deleted');
+                window.location = 'index.html';
+                //redirect_to_page('index.html');
+                /*
                 navigator.app.loadUrl("index.html", {
-                    wait: 200,
+                    wait: 2000,
                     loadingDialog: "Wait,Loading App",
-                    loadUrlTimeoutValue: 5000
+                    loadUrlTimeoutValue: 60000,
+                    clearHistory: true
                 });
+                */
             }, function () {
                 myApp.alert('Can not delete file');
-                //back_to_page('index.html');
+                window.location = 'index.html';
+                //redirect_to_page('index.html');
+                /*
                 navigator.app.loadUrl("index.html", {
-                    wait: 200,
+                    wait: 2000,
                     loadingDialog: "Wait,Loading App",
-                    loadUrlTimeoutValue: 5000
+                    loadUrlTimeoutValue: 60000,
+                    clearHistory: true
                 });
+                */
             });
         }, function () {
+            window.location = 'index.html';
+            //redirect_to_page('index.html');
+            /*
             navigator.app.loadUrl("index.html", {
-                wait: 200,
+                wait: 2000,
                 loadingDialog: "Wait,Loading App",
-                loadUrlTimeoutValue: 5000
+                loadUrlTimeoutValue: 60000,
+                clearHistory: true
             });
+            */
         });
 
     }, onErrorLoadFs);

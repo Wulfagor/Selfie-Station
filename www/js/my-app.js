@@ -27,36 +27,36 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main');
 var IScroll = new IScroll('.views');
 
-document.addEventListener('deviceready', function() {
+document.addEventListener('deviceready', function () {
 
     /*
-    db = window.sqlitePlugin.openDatabase({name: 'selfie_station.db', location: 'default'});
+     db = window.sqlitePlugin.openDatabase({name: 'selfie_station.db', location: 'default'});
 
-    db.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
-    }, error_transaction, success_transaction);
+     db.transaction(function (tx) {
+     tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
+     tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
+     }, error_transaction, success_transaction);
 
-    function error_transaction(object) {
-        myApp.alert('Query failed: ' + JSON.stringify(object));
-        console.log('Query failed: ' + JSON.stringify(object));
-    }
+     function error_transaction(object) {
+     myApp.alert('Query failed: ' + JSON.stringify(object));
+     console.log('Query failed: ' + JSON.stringify(object));
+     }
 
-    function success_transaction() {
-        myApp.alert('Query completed');
-        console.log('Query completed');
-    }
+     function success_transaction() {
+     myApp.alert('Query completed');
+     console.log('Query completed');
+     }
 
-    function onSuccess(transaction, resultSet) {
-        //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
-        //console.log('Query completed: ' + JSON.stringify(resultSet));
-    }
+     function onSuccess(transaction, resultSet) {
+     //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
+     //console.log('Query completed: ' + JSON.stringify(resultSet));
+     }
 
-    function onError(transaction, error) {
-        myApp.alert('Query failed: ' + error.message);
-        console.log('Query failed: ' + error.message);
-    }
-    */
+     function onError(transaction, error) {
+     myApp.alert('Query failed: ' + error.message);
+     console.log('Query failed: ' + error.message);
+     }
+     */
 });
 
 $$(document).on('deviceready', function () {
@@ -77,21 +77,21 @@ $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
     central_block();
 
     /*
-    db.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
-        tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
-    });
+     db.transaction(function (tx) {
+     tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
+     tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
+     });
 
-    function onSuccess(transaction, resultSet) {
-        //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
-        //console.log('Query completed: ' + JSON.stringify(resultSet));
-    }
+     function onSuccess(transaction, resultSet) {
+     //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
+     //console.log('Query completed: ' + JSON.stringify(resultSet));
+     }
 
-    function onError(transaction, error) {
-        myApp.alert('Query failed: ' + error.message);
-        console.log('Query failed: ' + error.message);
-    }
-    */
+     function onError(transaction, error) {
+     myApp.alert('Query failed: ' + error.message);
+     console.log('Query failed: ' + error.message);
+     }
+     */
 });
 
 $$(document).on('pageInit', '.page[data-page="hello_page"]', function (e) {
@@ -155,21 +155,21 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
 
                         /*
 
-                        db.transaction(function (tx) {
-                            tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", data], onSuccess, onError);
-                        });
+                         db.transaction(function (tx) {
+                         tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", data], onSuccess, onError);
+                         });
 
-                        function onSuccess(transaction, resultSet) {
-                            //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
-                            //console.log('Query completed: ' + JSON.stringify(resultSet));
-                        }
+                         function onSuccess(transaction, resultSet) {
+                         //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
+                         //console.log('Query completed: ' + JSON.stringify(resultSet));
+                         }
 
-                        function onError(transaction, error) {
-                            close_application();
-                            myApp.alert('Query failed: ' + error.message);
-                            console.log('Query failed: ' + error.message);
-                        }
-                        */
+                         function onError(transaction, error) {
+                         close_application();
+                         myApp.alert('Query failed: ' + error.message);
+                         console.log('Query failed: ' + error.message);
+                         }
+                         */
 
                         var pathToFile = cordova.file.dataDirectory + file_name;
 
@@ -180,7 +180,7 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                         }, onErrorLoadFs);
 
                         function createFile(dirEntry, fileName, isAppend) {
-                            dirEntry.getFile(fileName, {create: true, exclusive: false}, function(fileEntry) {
+                            dirEntry.getFile(fileName, {create: true, exclusive: false}, function (fileEntry) {
                                 writeFile(fileEntry, null, isAppend);
                             }, onErrorCreateFile);
                         }
@@ -192,7 +192,7 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                         function writeFile(fileEntry, dataObj) {
                             fileEntry.createWriter(function (fileWriter) {
 
-                                fileWriter.onwriteend = function() {
+                                fileWriter.onwriteend = function () {
                                     console.log('File has been successfully read');
                                 };
 
@@ -201,7 +201,7 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                                 };
 
                                 if (!dataObj) {
-                                    dataObj = new Blob([data], { type: 'text/plain' });
+                                    dataObj = new Blob([data], {type: 'text/plain'});
                                 }
 
                                 fileWriter.write(dataObj);
@@ -241,7 +241,7 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
         fileEntry.file(function (file) {
             var reader = new FileReader();
-            reader.onloadend = function() {
+            reader.onloadend = function () {
                 console.log(this.result);
                 image_content = this.result;
 
@@ -280,47 +280,47 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
     }, onErrorLoadFs);
 
     /*
-    db.transaction(function (tx) {
-        tx.executeSql('SELECT * FROM DATA WHERE name=?', ["selfie"], function (tx, results) {
+     db.transaction(function (tx) {
+     tx.executeSql('SELECT * FROM DATA WHERE name=?', ["selfie"], function (tx, results) {
 
-            var len = results.rows.length, i;
-            if (len > 0) {
-                var selfie_temp = results.rows.item(0).data;
-                if (selfie_temp !== null || (typeof selfie_temp !== 'undefined') || selfie_temp !== '') {
-                    var fd = new FormData();
+     var len = results.rows.length, i;
+     if (len > 0) {
+     var selfie_temp = results.rows.item(0).data;
+     if (selfie_temp !== null || (typeof selfie_temp !== 'undefined') || selfie_temp !== '') {
+     var fd = new FormData();
 
-                    if (data_of_user.agree_data_of_user == 'agree_data_of_user') {
-                        fd.append('name', data_of_user.name);
-                        fd.append('email', data_of_user.email);
-                        fd.append('send_email', 1);
-                    } else {
-                        fd.append('name', null);
-                        fd.append('email', null);
-                        fd.append('send_email', null);
-                    }
+     if (data_of_user.agree_data_of_user == 'agree_data_of_user') {
+     fd.append('name', data_of_user.name);
+     fd.append('email', data_of_user.email);
+     fd.append('send_email', 1);
+     } else {
+     fd.append('name', null);
+     fd.append('email', null);
+     fd.append('send_email', null);
+     }
 
-                    fd.append('selfie', "data:image/jpeg;base64," + selfie_temp);
+     fd.append('selfie', "data:image/jpeg;base64," + selfie_temp);
 
-                    $.ajax({
-                        url: 'http://50anni.cosmeticaitalia.it/wp-json/api/selfie/new_str',
-                        data: fd,
-                        processData: false,
-                        contentType: false,
-                        async: false,
-                        cache: false,
-                        method: 'POST',
-                        success: function (data) {
-                            //myApp.alert('success - ' + JSON.stringify(data));
-                        },
-                        error: function (data) {
-                            myApp.alert('error - ' + JSON.stringify(data));
-                        }
-                    });
-                }
-            }
-        }, null);
-    });
-    */
+     $.ajax({
+     url: 'http://50anni.cosmeticaitalia.it/wp-json/api/selfie/new_str',
+     data: fd,
+     processData: false,
+     contentType: false,
+     async: false,
+     cache: false,
+     method: 'POST',
+     success: function (data) {
+     //myApp.alert('success - ' + JSON.stringify(data));
+     },
+     error: function (data) {
+     myApp.alert('error - ' + JSON.stringify(data));
+     }
+     });
+     }
+     }
+     }, null);
+     });
+     */
 });
 
 function readFile() {
@@ -328,7 +328,7 @@ function readFile() {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
         fileEntry.file(function (file) {
             var reader = new FileReader();
-            reader.onloadend = function() {
+            reader.onloadend = function () {
                 console.log(this.result);
                 image_content = this.result;
             };
@@ -502,36 +502,36 @@ function isEmail(email) {
 function close_application() {
 
     /*
-    db.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
-    });
+     db.transaction(function (tx) {
+     tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
+     });
 
-    function onSuccess(tx, result) {
-        $.each(data_of_user, function (key, value) {
-            storage.removeItem(key);
-        });
-        data_of_user = {
-            'name': null,
-            'email': null,
-            'agree_photo': null,
-            'agree_data_of_user': null
-        };
-        back_to_page('index.html');
-    }
+     function onSuccess(tx, result) {
+     $.each(data_of_user, function (key, value) {
+     storage.removeItem(key);
+     });
+     data_of_user = {
+     'name': null,
+     'email': null,
+     'agree_photo': null,
+     'agree_data_of_user': null
+     };
+     back_to_page('index.html');
+     }
 
-    function onError(transaction, error) {
-        myApp.alert('Data Base Error: Can not drop a table');
-        $.each(data_of_user, function (key, value) {
-            storage.removeItem(key);
-        });
-        data_of_user = {
-            'name': null,
-            'email': null,
-            'agree_photo': null,
-            'agree_data_of_user': null
-        };
-        back_to_page('index.html');
-    }
+     function onError(transaction, error) {
+     myApp.alert('Data Base Error: Can not drop a table');
+     $.each(data_of_user, function (key, value) {
+     storage.removeItem(key);
+     });
+     data_of_user = {
+     'name': null,
+     'email': null,
+     'agree_photo': null,
+     'agree_data_of_user': null
+     };
+     back_to_page('index.html');
+     }
      */
 
     data_of_user = {
@@ -548,35 +548,47 @@ function close_application() {
     window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dirEntry) {
         console.log('file system open: ' + dirEntry.name);
 
-        dirEntry.getFile(file_name, {create: false}, function(fileEntry) {
+        dirEntry.getFile(file_name, {create: false}, function (fileEntry) {
             fileEntry.remove(function () {
                 console.log('File successfully deleted')
                 //back_to_page('index.html');
-                navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+                navigator.app.loadUrl("index.html", {
+                    wait: 200,
+                    loadingDialog: "Wait,Loading App",
+                    loadUrlTimeoutValue: 5000
+                });
             }, function () {
                 myApp.alert('Can not delete file');
                 //back_to_page('index.html');
-                navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+                navigator.app.loadUrl("index.html", {
+                    wait: 200,
+                    loadingDialog: "Wait,Loading App",
+                    loadUrlTimeoutValue: 5000
+                });
             });
-        }, function(){
-            back_to_page('index.html');
+        }, function () {
+            navigator.app.loadUrl("index.html", {
+                wait: 200,
+                loadingDialog: "Wait,Loading App",
+                loadUrlTimeoutValue: 5000
+            });
         });
 
     }, onErrorLoadFs);
 
     /*
-    window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
-        fileEntry.remove(function () {
-            console.log('File successfully deleted')
-            back_to_page('index.html');
-            //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
-        }, function () {
-            myApp.alert('Can not delete file');
-            back_to_page('index.html');
-            //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
-        });
-    }, onErrorLoadFs);
-    */
+     window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
+     fileEntry.remove(function () {
+     console.log('File successfully deleted')
+     back_to_page('index.html');
+     //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+     }, function () {
+     myApp.alert('Can not delete file');
+     back_to_page('index.html');
+     //navigator.app.loadUrl("index.html", {wait:2000, loadingDialog:"Wait,Loading App", loadUrlTimeoutValue: 60000});
+     });
+     }, onErrorLoadFs);
+     */
 }
 
 function camera_reload() {

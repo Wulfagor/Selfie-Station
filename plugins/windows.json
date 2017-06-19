@@ -1,0 +1,46 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "Selfie Station"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-device-motion": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-plugin-websql": {
+            "PACKAGE_NAME": "Selfie Station"
+        },
+        "cordova-sqlite-evcore-extbuild-free": {
+            "PACKAGE_NAME": "Selfie Station"
+        }
+    }
+}

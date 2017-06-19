@@ -4,8 +4,11 @@ window.data_of_user = {
     'agree_photo': null,
     'agree_data_of_user': null
 };
-window.db = null;
+var db = null;
 window.previous_page_name = null;
+window.file_name = 'selfie_station_image_text.txt';
+window.deferred_file_read = $.Deferred();
+window.image_content = '';
 
 var myApp = new Framework7({
     modalTitle: 'Selfie Station',
@@ -24,16 +27,25 @@ var $$ = Dom7;
 var mainView = myApp.addView('.view-main');
 var IScroll = new IScroll('.views');
 
-$$(document).on('deviceready', function () {
+document.addEventListener('deviceready', function() {
 
-    central_block();
-
+    /*
     db = window.sqlitePlugin.openDatabase({name: 'selfie_station.db', location: 'default'});
 
     db.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
         tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
-    });
+    }, error_transaction, success_transaction);
+
+    function error_transaction(object) {
+        myApp.alert('Query failed: ' + JSON.stringify(object));
+        console.log('Query failed: ' + JSON.stringify(object));
+    }
+
+    function success_transaction() {
+        myApp.alert('Query completed');
+        console.log('Query completed');
+    }
 
     function onSuccess(transaction, resultSet) {
         //myApp.alert('Query completed: ' + JSON.stringify(resultSet));
@@ -44,6 +56,13 @@ $$(document).on('deviceready', function () {
         myApp.alert('Query failed: ' + error.message);
         console.log('Query failed: ' + error.message);
     }
+    */
+});
+
+$$(document).on('deviceready', function () {
+
+    central_block();
+
 });
 
 $$(document).on('pageInit', '*', function (e) {
@@ -56,6 +75,8 @@ $$(document).on('pageInit', '*', function (e) {
 $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
 
     central_block();
+
+    /*
     db.transaction(function (tx) {
         tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
         tx.executeSql('CREATE TABLE IF NOT EXISTS DATA (name TEXT, data TEXT)', [], onSuccess, onError);
@@ -70,6 +91,7 @@ $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
         myApp.alert('Query failed: ' + error.message);
         console.log('Query failed: ' + error.message);
     }
+    */
 });
 
 $$(document).on('pageInit', '.page[data-page="hello_page"]', function (e) {
@@ -131,6 +153,8 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                             'background-size': 'contain'
                         });
 
+                        /*
+
                         db.transaction(function (tx) {
                             tx.executeSql('INSERT INTO DATA (name, data) VALUES (?, ?)', ["selfie", data], onSuccess, onError);
                         });
@@ -144,6 +168,44 @@ $$(document).on('pageInit', '.page[data-page="camera_success"]', function (e) {
                             close_application();
                             myApp.alert('Query failed: ' + error.message);
                             console.log('Query failed: ' + error.message);
+                        }
+                        */
+
+                        var pathToFile = cordova.file.dataDirectory + file_name;
+
+                        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dirEntry) {
+                            console.log('file system open: ' + dirEntry.name);
+                            var isAppend = true;
+                            createFile(dirEntry, file_name, isAppend);
+                        }, onErrorLoadFs);
+
+                        function createFile(dirEntry, fileName, isAppend) {
+                            dirEntry.getFile(fileName, {create: true, exclusive: false}, function(fileEntry) {
+                                writeFile(fileEntry, null, isAppend);
+                            }, onErrorCreateFile);
+                        }
+
+                        function onErrorCreateFile() {
+                            myApp.alert('Can not create file');
+                        }
+
+                        function writeFile(fileEntry, dataObj) {
+                            fileEntry.createWriter(function (fileWriter) {
+
+                                fileWriter.onwriteend = function() {
+                                    console.log('File has been successfully read');
+                                };
+
+                                fileWriter.onerror = function (e) {
+                                    myApp.alert('Failed file write: ' + e.toString());
+                                };
+
+                                if (!dataObj) {
+                                    dataObj = new Blob([data], { type: 'text/plain' });
+                                }
+
+                                fileWriter.write(dataObj);
+                            });
                         }
 
                         //myApp.alert('success - ' + data);
@@ -176,6 +238,48 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
         close_application();
     }, 16000);
 
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                console.log(this.result);
+                image_content = this.result;
+
+                var fd = new FormData();
+
+                if (data_of_user.agree_data_of_user == 'agree_data_of_user') {
+                    fd.append('name', data_of_user.name);
+                    fd.append('email', data_of_user.email);
+                    fd.append('send_email', 1);
+                } else {
+                    fd.append('name', null);
+                    fd.append('email', null);
+                    fd.append('send_email', null);
+                }
+
+                fd.append('selfie', "data:image/jpeg;base64," + image_content);
+
+                $.ajax({
+                    url: 'http://50anni.cosmeticaitalia.it/wp-json/api/selfie/new_str',
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    cache: false,
+                    method: 'POST',
+                    success: function (data) {
+                        //myApp.alert('success - ' + JSON.stringify(data));
+                    },
+                    error: function (data) {
+                        myApp.alert('error - ' + JSON.stringify(data));
+                    }
+                });
+            };
+            reader.readAsText(file);
+        }, onErrorReadFile);
+    }, onErrorLoadFs);
+
+    /*
     db.transaction(function (tx) {
         tx.executeSql('SELECT * FROM DATA WHERE name=?', ["selfie"], function (tx, results) {
 
@@ -216,7 +320,33 @@ $$(document).on('pageInit', '.page[data-page="thank_you"]', function (e) {
             }
         }, null);
     });
+    */
 });
+
+function readFile() {
+
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+            reader.onloadend = function() {
+                console.log(this.result);
+                image_content = this.result;
+            };
+            reader.readAsText(file);
+        }, onErrorReadFile);
+    }, onErrorLoadFs);
+}
+
+function deleteFile() {
+
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory + file_name, function (fileEntry) {
+        fileEntry.remove(function () {
+            console.log('File successfully deleted')
+        }, function () {
+            myApp.alert('Can not delete file');
+        });
+    }, onErrorLoadFs);
+}
 
 function check_data_of_user() {
     console.log('check_data_of_user');
@@ -370,32 +500,53 @@ function isEmail(email) {
 }
 
 function close_application() {
+
+    /*
     db.transaction(function (tx) {
-        tx.executeSql('DROP TABLE IF EXISTS DATA', [], function (tx, result) {
-            $.each(data_of_user, function (key, value) {
-                storage.removeItem(key);
-            });
-            data_of_user = {
-                'name': null,
-                'email': null,
-                'agree_photo': null,
-                'agree_data_of_user': null
-            };
-            back_to_page('index.html');
-        }, function (error) {
-            myApp.alert('Data Base Error: Can not drop a table');
-            $.each(data_of_user, function (key, value) {
-                storage.removeItem(key);
-            });
-            data_of_user = {
-                'name': null,
-                'email': null,
-                'agree_photo': null,
-                'agree_data_of_user': null
-            };
-            back_to_page('index.html');
-        });
+        tx.executeSql('DROP TABLE IF EXISTS DATA', [], onSuccess, onError);
     });
+
+    function onSuccess(tx, result) {
+        $.each(data_of_user, function (key, value) {
+            storage.removeItem(key);
+        });
+        data_of_user = {
+            'name': null,
+            'email': null,
+            'agree_photo': null,
+            'agree_data_of_user': null
+        };
+        back_to_page('index.html');
+    }
+
+    function onError(transaction, error) {
+        myApp.alert('Data Base Error: Can not drop a table');
+        $.each(data_of_user, function (key, value) {
+            storage.removeItem(key);
+        });
+        data_of_user = {
+            'name': null,
+            'email': null,
+            'agree_photo': null,
+            'agree_data_of_user': null
+        };
+        back_to_page('index.html');
+    }
+    */
+
+    deleteFile();
+
+    $.each(data_of_user, function (key, value) {
+        storage.removeItem(key);
+    });
+
+    data_of_user = {
+        'name': null,
+        'email': null,
+        'agree_photo': null,
+        'agree_data_of_user': null
+    };
+    back_to_page('index.html');
 }
 
 function camera_reload() {
@@ -429,4 +580,12 @@ function getAppPath() {
         appPath += pathArray[i] + "/";
     }
     return appPath;
+}
+
+function onErrorLoadFs() {
+    myApp.alert('Can not load file system');
+}
+
+function onErrorReadFile() {
+    myApp.alert('Can not read file');
 }

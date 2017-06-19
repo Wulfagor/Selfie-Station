@@ -1,0 +1,10 @@
+﻿[type="checkbox"]:not(:checked),[type="checkbox"]:checked{position:absolute;left:-9999px}
+[type="checkbox"]:not(:checked) + label,[type="checkbox"]:checked + label{position:relative;padding-left:40px;cursor:pointer}
+[type="checkbox"]:not(:checked) + label:before,[type="checkbox"]:checked + label:before{content:'';position:absolute;left:0;top:0;width:23px;height:23px;border:1px solid #fff;border-radius:3px;background:#fff}
+.has_error [type="checkbox"]:not(:checked) + label:before,.has_error [type="checkbox"]:checked + label:before{border:1px solid red;background-color:rgba(255,0,0,0.4)}
+[type="checkbox"]:not(:checked) + label:after,[type="checkbox"]:checked + label:after{content:'✔';position:absolute;top:4px;left:4px;font-size:20px;line-height:.8;color:#000;transition:all .2s}
+[type="checkbox"]:not(:checked) + label:after{opacity:0;transform:scale(0)}
+[type="checkbox"]:checked + label:after{opacity:1;transform:scale(1)}
+[type="checkbox"]:disabled:not(:checked) + label:before,[type="checkbox"]:disabled:checked + label:before{box-shadow:none;border-color:#bbb;background-color:#ddd}
+[type="checkbox"]:disabled:checked + label:after{color:#999}
+[type="checkbox"]:disabled + label{color:#aaa}

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <title>Cosmetica Italia - Selfie Station</title>
+
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<!-- Views -->
+<div class="views">
+    <div class="view view-main">
+        <div class="pages">
+            <div data-page="index" class="page">
+                <div class="page-content">
+                    <div class="content-block">
+                        <div class="content_block_inner">
+                            <div id="logo"></div>
+                            <div class="title">Scattati un selfie</div>
+                            <div class="title_desc">e dedicalo alla cosmetica</div>
+                            <form id="main_form" class="main_form" action="#"
+                                  method="POST" name="SelfieStationForm">
+                                <input class="default_input" type="text" name="name" autocomplete="off"
+                                       placeholder="Nome">
+                                <input class="default_input" type="email" name="email" autocomplete="off"
+                                       placeholder="Email">
+                                <div class="form_agree">
+                                    <label class="label-checkbox item-content">
+                                        <input type="checkbox" name="agree_photo" value="agree_photo">
+                                        <div class="item-media">
+                                            <i class="icon icon-form-checkbox" style="border: 2px solid #fff;"></i>
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Consenso trattamento dati personali ai sensi del D.Lgs. n. 196/03 (foto)
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <div class="clear"></div>
+                                    <label class="label-checkbox item-content">
+                                        <input type="checkbox" name="agree_data_of_user" value="agree_data_of_user">
+                                        <div class="item-media">
+                                            <i class="icon icon-form-checkbox" style="border: 2px solid #fff;"></i>
+                                        </div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Consenso trattamento dati personali ai sensi del D.Lgs. n. 196/03 (nome e indirizzo email)
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <div class="clear"></div>
+                                    <div class="agree_text">
+                                        <a href="#" onclick="redirect_to_page('agree_text.html'); return false;">Clicca qui per leggere l'informativa sulla privacy</a>
+                                    </div>
+                                </div>
+                                <div class="form_button">
+                                    <input type="submit" class="input_submit" value=""
+                                           onclick="process_form(); return false;">
+                                    <div onclick="process_form(); return false;">Avanti!</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/my-app.js"></script>
+
+<script>
+    (function () {
+        if (Framework7.prototype.device.android) {
+            Dom7('head').append(
+                    '<link rel="stylesheet" href="lib/framework7/css/framework7.material.min.css">' +
+                    '<link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">'
+            );
+        }
+        else if (Framework7.prototype.device.ios) {
+            Dom7('head').append(
+                    '<link rel="stylesheet" href="lib/framework7/css/framework7.ios.min.css">' +
+                    '<link rel="stylesheet" href="lib/framework7/css/framework7.ios.colors.min.css">'
+            );
+        }
+        else {
+            Dom7('head').append(
+                    '<link rel="stylesheet" href="lib/framework7/css/framework7.material.min.css">' +
+                    '<link rel="stylesheet" href="lib/framework7/css/framework7.material.colors.min.css">'
+            );
+        }
+    })();
+</script>
+
+</body>
+
+</html>
